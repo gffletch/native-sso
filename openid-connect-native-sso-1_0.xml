@@ -23,16 +23,16 @@
 
   <front>
     <title abbrev="OpenID Connect Native SSO for Mobile Apps 1.0">OpenID Connect
-    Native SSO for Mobile Apps 1.0 - draft 03</title>
+    Native SSO for Mobile Apps 1.0 - draft 04</title>
 
     <author fullname="George F. Fletcher" initials="G.F.F." surname="Fletcher">
-      <organization abbrev="Verizon Media">Verizon Media Group</organization>
+      <organization abbrev="Capital One">Capital One</organization>
       <address>
-        <email>george.fletcher@verizonmedia.com</email>
+        <email>gffletch@aol.com</email>
       </address>
     </author>
 
-    <date day="3" month="July" year="2019" />
+    <date day="20" month="September" year="2022" />
 
     <workgroup>OpenID Connect Working Group</workgroup>
 
@@ -46,7 +46,7 @@
       <t>
 		  This document describes a mechanism that allows a mobile
 		  app to share the identity/authentication obtained by a different mobile
-		  app where both apps are issued by the same vendor.
+		  app where both apps are written by the same vendor.
       </t>
     </abstract>
   </front>
@@ -75,8 +75,8 @@
       </t>
       <t>
 		  This document specifies a new scope, extends the token endpoint and
-		  profiles the <xref target="OAuth2.TokenExchange">OAuth2 token
-		  exchange</xref> spec allowing mobile apps to share identity (SSO)
+		  profiles the <xref target="OAuth2.TokenExchange">OAuth2 Token
+		  Exchange</xref> spec allowing mobile apps to share identity (SSO)
 		  between apps produced and signed by the same vendor (i.e. signed with
 		  the same vendor certificate).
       </t>
@@ -123,7 +123,7 @@
 
 	    <t hangText="Session ID">
 	      <vspace/>
-	      Identifier for a Session.
+	      Identifier for a user's authentication session.
 	    </t>
 
 	  </list>
@@ -174,6 +174,10 @@
 			scope is specified signifying that the client is requesting a
 			<spanx style="verb">device_secret</spanx> to be returned when
 			the code is exchanged for tokens.</t>
+		<t>After step 8, Native App #1 stores the device_secret and id_token
+		   in the protected device storage accessible only to Native App #2.</t>
+		<t>Native App #2 uses the stored data from the shared device storage
+		   to obtain tokens for the user then enabling SSO</t>
 		<figure>
 			<artwork><![CDATA[
 +----------+     +----------+      +-----------+      +------------+
@@ -236,7 +240,7 @@
 				  code for tokens. The client SHOULD provide the
 				  <spanx style="verb">device_secret</spanx> to the /token endpoint
 				  during refresh token requests so that the AS may rotate the
-          device_secert as necessary.</t>
+          device_secret as necessary.</t>
 			  <t>The exact construction of the <spanx style="verb">device_secret</spanx>
 				  is out of scope for this specification.</t>
 		  </section>
@@ -263,11 +267,11 @@
 		  </section>
 		  <section anchor="TokenRsp" title="Token Response">
 			  <t>When the authorization server receives the
-				  <spanx style="verv">device_secret</spanx> value it MUST
+				  <spanx style="verb">device_secret</spanx> value it MUST
 				  process the authorization_code grant type per the OIDC spec with the
 				  following additions applying to the id_token.
 				  <list style="numbers">
-					  <t>Add a ?ds_hash? claim to the id_token to represent a function of
+					  <t>Add a <spanx style="verb">ds_hash</spanx> claim to the id_token to represent a function of
 						  the device_secret.
 						  <list style="hanging">
 							  <t hangText="ds_hash">
@@ -414,6 +418,8 @@
 					  <t>Validate the device_secret to ensure the token is still valid. The
 						  format of this secret is defined by the Authorization server and
 						  is out of scope for this specification.</t>
+					  <t>Verify the id_token for integrity protection by validating the
+					     signature of the id_token JWT.</t>
 					  <t>Verify that the binding between the id_token and the device_secret
 						  (as defined in the extension to the /token response) is valid.</t>
 					  <t>Verify that the session id in the id_token (?sid? claim) is still
@@ -421,7 +427,7 @@
 						  error of ?invalid_grant?. Note that in the case of a refresh_tokens
               issued with an offline_scope the 'sid' value SHOULD represent the
               offline "session" such that if the original refresh_token is revoked
-              the 'ds_hash' value in the id_token is not longer valid.
+              the 'ds_hash' value in the id_token is no longer valid.
             </t>
 					  <t>Validate that the client requesting native SSO is authorized to
 						  do so. The AS SHOULD maintain a list of client_ids that can share
@@ -496,9 +502,8 @@
         <t>The following is a non-normative example</t>
 			  <figure><artwork><![CDATA[
     HTTP/1.1 200 OK
-    Content-Type: application/json;charset=UTF-8
+    Content-Type: application/json
     Cache-Control: no-store
-    Pragma: no-cache
 
     {
       "access_token":"2YotnFZFEjr1zCsicMWpAA",
