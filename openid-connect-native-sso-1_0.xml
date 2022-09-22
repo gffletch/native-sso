@@ -724,9 +724,10 @@
       </t>
       <t>
         <list style="empty">
-          <t>Nat Sakimura, Nomura Reserach Institute, Ltd.</t>
-          <t>Nov Matake</t>
-          <t>Filip Skokan</t>
+			<t>Filip Skokan</t>
+			<t>Joseph Heenan</t>
+			<t>Nat Sakimura</t>
+            <t>Nov Matake</t>
         </list>
       </t>
     </section>
@@ -743,6 +744,10 @@
       <t>
       Draft-03 - Applied updates from the community. Removed non-relevant IANA claims section.
       </t>
+		<t>
+			Draft-04 - Normative change to verify the id_token plus other edits based on feedback
+			from Joseph Heenan.
+		</t>
         </list>
       </t>
     </section>
