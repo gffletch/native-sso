@@ -22,7 +22,7 @@
   <?rfc private="Draft" ?>
 
   <front>
-    <title abbrev="OIDC App Native SSO">OpenID Connect
+    <title abbrev="OpenID Connect Native SSO">OpenID Connect
     Native SSO for Mobile Apps 1.0 - draft 04</title>
 
     <author fullname="George F. Fletcher" initials="G.F.F." surname="Fletcher">
@@ -75,7 +75,7 @@
       </t>
       <t>
 		  This document specifies a new scope, extends the token endpoint and
-		  profiles the <xref target="OAuth2.TokenExchange">OAuth2 Token
+		  profiles the <xref target="RFC8693">OAuth2 Token
 		  Exchange</xref> spec allowing mobile apps to share identity (SSO)
 		  between apps produced and signed by the same vendor (i.e. signed with
 		  the same vendor certificate).
@@ -321,7 +321,7 @@
 
 	  <section anchor="NativeSSOTX" title="Token Exchange Profile for Native SSO">
 		  <t>This section profiles the
-			  <xref target="OAuth2.TokenExchange">OAuth2 Token Exchange</xref> spec and
+			  <xref target="RFC8693">OAuth2 Token Exchange</xref> spec and
 			  describes the processing rules used to exchange a previous authentication
 			  for new refresh and access tokens requested by a mobile app created by
 			  the same vendor as the first mobile app and both apps signed by the
@@ -520,32 +520,40 @@
 
 
     <section anchor="Security" title="Security Considerations">
-      <t>
+      <section anchor="dsp" title="Device Secret Protection">
+		  <t>
 		  Sufficient care must be made to protect the <spanx style="verb">device_secret</spanx>.
 		  The device secret SHOULD be encrypted by the Authorization Service and periodically
 		  refreshed via the mechanisms described in this specification.
-      </t>
+		  </t>
+		  </section>
+		<section anchor="cds" title="Cross-Device SSO">
+			<t>
+			If it is possible to move correctly bound <spanx style="verb">device_secret</spanx>
+			and <spanx style="verb">id_token</spanx> to a separate device, that device can obtain
+			the user's authentication state on the new device. An implementation of this
+			specification SHOULD use best efforts to bind the device_secret to the device instance.
+			</t>
+			</section>
+        <section anchor="idt" title="id_token usage">
+			<t>
+			Use of the id_token in this specification takes some liberties with id_token validation.
+			For instance, the <spanx style="verb">aud</spanx> claim normally identifies the client
+			receiving the id_token and not the authorization server that issued the id_token.
+			Additionally, the id_token may have expired at the time of use designated by the specification.
+			</t>
+		</section>
     </section>
 
   </middle>
 
   <back>
     <references title="Normative References">
-      <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.2119"?>
-      <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.3986"?>
-      <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6749"?>
-      <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7230"?>
+		<?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.2119"?>
+		<?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6749"?>
+        <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7230"?>
 		<?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8252"?>
-
-		<reference anchor="OAuth2.TokenExchange" target="https://tools.ietf.org/html/draft-ietf-oauth-token-exchange-14">
-			<front>
-				<title>OAuth 2.0 Token Exchange</title>
-				<author fullname="Brian Campbell" initials="B." surname="Campbell">
-					<organization abbrev="Ping Identity">Ping Identity</organization>
-				</author>
-				<date day="4" month="June" year="2018"/>
-			</front>
-		</reference>
+		<?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8693"?>
 
       <reference anchor="OpenID.Core" target="http://openid.net/specs/openid-connect-core-1_0.html">
         <front>
@@ -575,108 +583,6 @@
         </front>
       </reference>
 
-      <reference anchor="OpenID.Discovery" target="http://openid.net/specs/openid-connect-discovery-1_0.html">
-        <front>
-          <title>OpenID Connect Discovery 1.0</title>
-
-          <author fullname="Nat Sakimura" initials="N." surname="Sakimura">
-            <organization abbrev="NRI">Nomura Research Institute, Ltd.</organization>
-          </author>
-
-          <author fullname="John Bradley" initials="J." surname="Bradley">
-            <organization abbrev="Ping Identity">Ping Identity</organization>
-          </author>
-
-          <author fullname="Michael B. Jones" initials="M.B." surname="Jones">
-            <organization abbrev="Microsoft">Microsoft</organization>
-          </author>
-
-          <author fullname="Edmund Jay" initials="E." surname="Jay">
-            <organization abbrev="Illumila">Illumila</organization>
-          </author>
-
-          <date day="8" month="November" year="2014"/>
-        </front>
-      </reference>
-
-      <reference anchor="OpenID.Registration" target="http://openid.net/specs/openid-connect-registration-1_0.html">
-        <front>
-          <title>OpenID Connect Dynamic Client Registration 1.0</title>
-
-          <author fullname="Nat Sakimura" initials="N." surname="Sakimura">
-            <organization abbrev="NRI">Nomura Research Institute, Ltd.</organization>
-          </author>
-
-          <author fullname="John Bradley" initials="J." surname="Bradley">
-            <organization abbrev="Ping Identity">Ping Identity</organization>
-          </author>
-
-          <author fullname="Michael B. Jones" initials="M.B." surname="Jones">
-            <organization abbrev="Microsoft">Microsoft</organization>
-          </author>
-
-          <date day="8" month="November" year="2014"/>
-        </front>
-      </reference>
-
-      <reference anchor="OpenID.Session" target="http://openid.net/specs/openid-connect-session-1_0.html">
-	<front>
-	  <title>OpenID Connect Session Management 1.0</title>
-
-	  <author fullname="Nat Sakimura" initials="N." surname="Sakimura">
-	    <organization abbrev="NRI">Nomura Research Institute, Ltd.</organization>
-	  </author>
-
-	  <author fullname="John Bradley" initials="J." surname="Bradley">
-	    <organization abbrev="Ping Identity">Ping Identity</organization>
-	  </author>
-
-	  <author fullname="Michael B. Jones" initials="M.B." surname="Jones">
-	    <organization abbrev="Microsoft">Microsoft</organization>
-	  </author>
-
-	  <author fullname="Breno de Medeiros" initials="B." surname="de Medeiros">
-	    <organization abbrev="Google">Google</organization>
-	  </author>
-
-	  <author fullname="Chuck Mortimore" initials="C." surname="Mortimore">
-	    <organization abbrev="Salesforce">Salesforce</organization>
-	  </author>
-
-	  <author fullname="Edmund Jay" initials="E." surname="Jay">
-	    <organization abbrev="Illumila">Illumila</organization>
-	  </author>
-
-	  <date day="25" month="January" year="2017" />
-	</front>
-      </reference>
-
-      <reference anchor="OpenID.BackChannel" target="http://openid.net/specs/openid-connect-backchannel-1_0.html">
-	<front>
-	  <title>OpenID Connect Back-Channel Logout 1.0</title>
-
-	  <author fullname="Michael B. Jones" initials="M.B." surname="Jones">
-	    <organization abbrev="Microsoft">Microsoft</organization>
-	  </author>
-
-          <author fullname="John Bradley" initials="J." surname="Bradley">
-            <organization abbrev="Ping Identity">Ping Identity</organization>
-          </author>
-
-	  <date day="25" month="January" year="2017" />
-	</front>
-      </reference>
-
-      <reference anchor="IANA.JWT.Claims" target="http://www.iana.org/assignments/jwt">
-        <front>
-          <title>JSON Web Token Claims</title>
-          <author>
-            <organization>IANA</organization>
-          </author>
-	  <date/>
-        </front>
-      </reference>
-
       <reference anchor="IANA.OAuth.Parameters" target="http://www.iana.org/assignments/oauth-parameters">
         <front>
           <title>OAuth Parameters</title>
@@ -685,34 +591,6 @@
           </author>
 	  <date/>
         </front>
-      </reference>
-
-    </references>
-
-    <references title="Informative References">
-      <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7591"?>
-
-      <reference anchor="JWT" target="http://tools.ietf.org/html/rfc7519">
-	<front>
-	  <title>JSON Web Token (JWT)</title>
-
-	  <author fullname="Michael B. Jones" initials="M.B." surname="Jones">
-	    <organization abbrev="Microsoft">Microsoft</organization>
-	  </author>
-
-	  <author fullname="John Bradley" initials="J." surname="Bradley">
-	    <organization abbrev="Ping Identity">Ping Identity</organization>
-	  </author>
-
-	  <author fullname="Nat Sakimura" initials="N." surname="Sakimura">
-	    <organization abbrev="NRI">Nomura Research Institute, Ltd.</organization>
-	  </author>
-
-	  <date month="May" year="2015" />
-	</front>
-
-	<seriesInfo name="RFC" value="7519"/>
-	<seriesInfo name="DOI" value="10.17487/RFC7519"/>
       </reference>
 
     </references>
@@ -746,7 +624,7 @@
       </t>
 		<t>
 			Draft-04 - Normative change to verify the id_token plus other edits based on feedback
-			from Joseph Heenan.
+			from Joseph Heenan. Also updated Security Considerations section and general cleanup.
 		</t>
         </list>
       </t>
