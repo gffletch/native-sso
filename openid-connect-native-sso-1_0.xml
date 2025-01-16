@@ -32,7 +32,7 @@
       </address>
     </author>
 
-    <date day="31" month="December" year="2024" />
+    <date day="16" month="January" year="2025" />
 
     <workgroup>OpenID Connect Working Group</workgroup>
 
@@ -259,8 +259,8 @@
 			      and <spanx style="verb">refresh_token</spanx> grant types. Support for other
 			      grant types is out of scope for this specification.</t>
 			  <t>This specification defines the following additional
-				  parameters to the /token endpoint for the <spanx style="verb">authorization_code</spanx>
-				  and <spanx style="verb">refresh_token</spanx> grant types.
+				  parameter to the /token endpoint for the <spanx style="verb">authorization_code</spanx>
+				  and <spanx style="verb">refresh_token</spanx> grant types:
 				  <list style="hanging">
 
 					  <t hangText="device_secret">
@@ -397,7 +397,7 @@
 					  </t>
 				  </list>
 			  </t>
-			  <t>Additionally this profile defines the use of the following token exchange parameters.
+			  <t>Additionally, this profile defines the use of the following token exchange parameters:
 				  <list style="hanging">
 					  <t hangText="grant_type">
 						  <vspace/>
@@ -447,7 +447,7 @@
 					  </t>
 				  </list>
 			  </t>
-			  <t>This profile also defines the following token type identifiers.
+			  <t>This profile also defines the following token type identifier:
 				  <list style="hanging">
 				  <t hangText="urn:openid:params:token-type:device-secret">
 					  <vspace/>
@@ -483,7 +483,7 @@
 		  <section anchor="TXRules" title="Native SSO Processing Rules">
 			  <t>When the authorization server receives a request at the token endpoint
 				  conforming to this profile it MUST perform the following checks before
-				  issuing any tokens.
+				  issuing any tokens:
 				  <list style="numbers">
 					  <t>Validate the device_secret to ensure the token is still valid. The
 						  format of this secret is defined by the Authorization server and
@@ -576,7 +576,7 @@
 				  obtain the user's consent for a particular requested scope value, the AS MUST return the
 				  OpenID Connect defined error of <spanx style="verb">interaction_required</spanx>. This
 				  instructs the client to start an authorization request with the AS via the standard web
-				  based flows, as described in section <xref target="AuthZReq"/>.
+				  based flows, as described in <xref target="AuthZReq"/>.
 			  </t>
 			  <t>In the case of any errors, the AS MUST return a valid OAuth2 Error response
 				  as described in Section 2.2.2 of the Token Exchange spec.</t>
@@ -736,55 +736,52 @@
 		<?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8414"?>
 		<?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8693"?>
 
-      <reference anchor="OpenID.Core" target="http://openid.net/specs/openid-connect-core-1_0.html">
-        <front>
-          <title>OpenID Connect Core 1.0</title>
+      <reference anchor="OpenID.Core" target="https://openid.net/specs/openid-connect-core-1_0.html">
+	<front>
+	  <title>OpenID Connect Core 1.0 incorporating errata set 2</title>
 
-          <author fullname="Nat Sakimura" initials="N." surname="Sakimura">
-            <organization abbrev="NRI">Nomura Research Institute, Ltd.</organization>
-          </author>
-
-          <author fullname="John Bradley" initials="J." surname="Bradley">
-            <organization abbrev="Ping Identity">Ping Identity</organization>
-          </author>
-
-          <author fullname="Michael B. Jones" initials="M.B." surname="Jones">
-            <organization abbrev="Microsoft">Microsoft</organization>
-          </author>
-
-          <author fullname="Breno de Medeiros" initials="B." surname="de Medeiros">
-            <organization abbrev="Google">Google</organization>
-          </author>
-
-	  <author fullname="Chuck Mortimore" initials="C." surname="Mortimore">
-	    <organization abbrev="Salesforce">Salesforce</organization>
+	  <author fullname="Nat Sakimura" initials="N." surname="Sakimura">
+	    <organization abbrev="NAT.Consulting (was at NRI)">NAT.Consulting</organization>
 	  </author>
 
-          <date day="8" month="November" year="2014"/>
-        </front>
+	  <author fullname="John Bradley" initials="J." surname="Bradley">
+	    <organization abbrev="Yubico (was at Ping Identity)">Yubico</organization>
+	  </author>
+
+	  <author fullname="Michael B. Jones" initials="M.B." surname="Jones">
+	    <organization abbrev="Self-Issued Consulting (was at Microsoft)">Self-Issued Consulting</organization>
+	  </author>
+
+	  <author fullname="Breno de Medeiros" initials="B." surname="de Medeiros">
+	    <organization abbrev="Google">Google</organization>
+	  </author>
+
+	  <author fullname="Chuck Mortimore" initials="C." surname="Mortimore">
+	    <organization abbrev="Disney (was at Salesforce)">Disney</organization>
+	  </author>
+
+	  <date day="15" month="December" year="2023"/>
+	</front>
       </reference>
 
-		<reference anchor="OpenID.Discovery">
-			<front>
-				<title>OpenID Connect Discovery 1.0</title>
-				<author fullname="Nat Sakimura" initials="N." surname="Sakimura">
-					<organization abbrev="NRI">Nomura Research Institute, Ltd.</organization>
-				</author>
-				<author fullname="John Bradley" initials="J." surname="Bradley">
-					<organization abbrev="Ping Identity">Ping Identity</organization>
-				</author>
-				<author fullname="Michael B. Jones" initials="M.B." surname="Jones">
-					<organization abbrev="Microsoft">Microsoft</organization>
-				</author>
-				<author fullname="Edmund Jay" initials="E." surname="Jay">
-					<organization abbrev="Illumila">Illumila</organization>
-				</author>
-
-				<date day="8" month="November" year="2014"/>
-			</front>
-
-			<format target="http://openid.net/specs/openid-connect-discovery-1_0.html" type="HTML" />
-		</reference>
+      <reference anchor="OpenID.Discovery" target="https://openid.net/specs/openid-connect-discovery-1_0.html">
+	<front>
+	  <title>OpenID Connect Discovery 1.0 incorporating errata set 2</title>
+	  <author fullname="Nat Sakimura" initials="N." surname="Sakimura">
+	    <organization abbrev="NAT.Consulting (was at NRI)">NAT.Consulting</organization>
+	  </author>
+	  <author fullname="John Bradley" initials="J." surname="Bradley">
+	    <organization abbrev="Yubico (was at Ping Identity)">Yubico</organization>
+	  </author>
+	  <author fullname="Michael B. Jones" initials="M.B." surname="Jones">
+	    <organization abbrev="Self-Issued Consulting (was at Microsoft)">Self-Issued Consulting</organization>
+	  </author>
+	  <author fullname="Edmund Jay" initials="E." surname="Jay">
+	    <organization abbrev="Illumila">Illumila</organization>
+	  </author>
+	  <date day="15" month="December" year="2023"/>
+	</front>
+      </reference>
 
       <reference anchor="IANA.OAuth.Parameters" target="http://www.iana.org/assignments/oauth-parameters">
         <front>
@@ -817,7 +814,7 @@
     </section>
 
     <section anchor="Notices" title="Notices">
-      <t>Copyright (c) 2024 The OpenID Foundation.</t>
+      <t>Copyright (c) 2025 The OpenID Foundation.</t>
       <t>
 	The OpenID Foundation (OIDF) grants to any Contributor, developer,
 	implementer, or other interested party a non-exclusive, royalty free,
